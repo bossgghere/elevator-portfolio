@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Floating Brand Logo in Top Right (No Header Bar)
+   ========================================================================== */
+
+.floating-top-right {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(12, 14, 18, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 8px 18px 8px 20px;
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: all var(--transition-fast);
+}
+
+.floating-top-right:hover {
+  background: rgba(15, 17, 21, 0.88);
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.floating-brand-logo {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.brand-sub {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+}
+
+.floating-audio-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.85);
+  transition: all var(--transition-fast);
+  margin-left: 4px;
+}
+
+.floating-audio-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-color: var(--color-gold);
+}
+
+@media (max-width: 600px) {
+  .floating-top-right {
+    top: 16px;
+    right: 16px;
+    padding: 6px 14px 6px 16px;
+  }
+
+  .brand-text {
+    font-size: 0.92rem;
+  }
+
+  .brand-sub {
+    font-size: 0.58rem;
+  }
+}
