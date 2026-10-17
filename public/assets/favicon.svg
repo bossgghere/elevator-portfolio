@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <!-- Liquid Gradient (Sunset Coral / Pink into Gold) -->
+    <linearGradient id="cocktailLiquid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b68" />
+      <stop offset="50%" stop-color="#ff7b54" />
+      <stop offset="100%" stop-color="#ffb23f" />
+    </linearGradient>
+
+    <!-- Glass Gold Rim & Stem Gradient -->
+    <linearGradient id="goldStem" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff2b2" />
+      <stop offset="60%" stop-color="#d4af37" />
+      <stop offset="100%" stop-color="#aa820a" />
+    </linearGradient>
+
+    <!-- Glass Shimmer -->
+    <linearGradient id="glassShimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Luxury Dark Backdrop Circle for contrast in both dark & light tab bars -->
+  <circle cx="32" cy="32" r="30" fill="#0e1117" stroke="#d4af37" stroke-width="2.5" />
+
+  <!-- Cocktail Liquid inside Coupe -->
+  <path d="M18.5 25 C19 35 45 35 45.5 25 Z" fill="url(#cocktailLiquid)" />
+
+  <!-- Liquid Surface / Froth -->
+  <ellipse cx="32" cy="25" rx="13.5" ry="2.2" fill="#ffe0dc" opacity="0.9" />
+
+  <!-- Glass Structure: Coupe Bowl, Stem, Foot -->
+  <path d="M16.5 22 C16.5 37 30 38 30 46 L24 46 C23 46 22 47 22 48 C22 49 23 50 24 50 L40 50 C41 50 42 49 42 48 C42 47 41 46 40 46 L34 46 C34 38 47.5 37 47.5 22 Z" 
+        fill="none" 
+        stroke="url(#goldStem)" 
+        stroke-width="2.4" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+
+  <!-- Coupe Top Rim -->
+  <ellipse cx="32" cy="22" rx="15.5" ry="2.6" fill="none" stroke="url(#goldStem)" stroke-width="2.2" />
+
+  <!-- Glass Light Reflection / Shimmer -->
+  <path d="M20 26.5 C20.5 33 26 36 29 37" fill="none" stroke="url(#glassShimmer)" stroke-width="1.8" stroke-linecap="round" />
+
+  <!-- Citrus Wheel Garnish perched on right rim -->
+  <circle cx="43" cy="18" r="6" fill="#ffb703" stroke="#e67e22" stroke-width="1.2" />
+  <circle cx="43" cy="18" r="4.3" fill="#ffd166" />
+  <path d="M43 14 L43 22 M39 18 L47 18 M40.2 15.2 L45.8 20.8 M40.2 20.8 L45.8 15.2" stroke="#e67e22" stroke-width="0.8" />
+
+  <!-- Golden Sparkle ✦ in top-left -->
+  <path d="M15 13 Q15 17 19 17 Q15 17 15 21 Q15 17 11 17 Q15 17 15 13 Z" fill="#fff5d0" />
+</svg>
