@@ -82,6 +82,45 @@ export function useWebAudio() {
     osc2.stop(now + 0.5);
   }, [soundEnabled, initAudio]);
 
+  const playPageTurn = useCallback(() => {
+    if (!soundEnabled) return;
+    initAudio();
+    const ctx = audioCtxRef.current;
+    if (!ctx) return;
+
+    try {
+      const now = ctx.currentTime;
+      const bufferSize = Math.floor(ctx.sampleRate * 0.1);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = ctx.createBufferSource();
+      whiteNoise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1100, now);
+      filter.frequency.exponentialRampToValueAtTime(1800, now + 0.08);
+      filter.Q.setValueAtTime(2.0, now);
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.05, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.1);
+
+      whiteNoise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      whiteNoise.start(now);
+    } catch {
+      // Failsafe for audio context
+    }
+  }, [soundEnabled, initAudio]);
+
   const toggleSound = useCallback(() => {
     setSoundEnabled(prev => {
       const next = !prev;
@@ -98,6 +137,7 @@ export function useWebAudio() {
     toggleSound,
     playElevatorChime,
     playCocktailClink,
+    playPageTurn,
     initAudio,
   };
 }

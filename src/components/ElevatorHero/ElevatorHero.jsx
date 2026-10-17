@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { MenuModal } from '../MenuModal/MenuModal';
 import './ElevatorHero.css';
 
-export function ElevatorHero({ playElevatorChime }) {
+export function ElevatorHero({ playElevatorChime, playCocktailClink, playPageTurn }) {
   const [manualDoorsOpen, setManualDoorsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const trackRef = useRef(null);
   const leftDoorRef = useRef(null);
@@ -12,6 +14,7 @@ export function ElevatorHero({ playElevatorChime }) {
   const rooftopRef = useRef(null);
   const welcomeRef = useRef(null);
   const indicatorRef = useRef(null);
+  const hotspotRef = useRef(null);
   const manualDoorsOpenRef = useRef(false);
 
   manualDoorsOpenRef.current = manualDoorsOpen;
@@ -67,6 +70,13 @@ export function ElevatorHero({ playElevatorChime }) {
           rooftopRef.current.style.transform = `scale3d(${rooftopScale}, ${rooftopScale}, 1)`;
         }
 
+        // Bar Menu Hotspot visibility tracking doors
+        if (doorProgress > 0.25) {
+          if (hotspotRef.current) hotspotRef.current.classList.add('visible');
+        } else {
+          if (hotspotRef.current) hotspotRef.current.classList.remove('visible');
+        }
+
         // Elevator Cab Exit Zoom (stepping out of the elevator)
         if (progress > 0.45) {
           const exitP = (progress - 0.45) / 0.55;
@@ -119,6 +129,16 @@ export function ElevatorHero({ playElevatorChime }) {
     };
   }, [playElevatorChime]);
 
+  // Open & Close Menu Handlers
+  const handleOpenMenu = () => {
+    if (playCocktailClink) playCocktailClink();
+    setIsMenuOpen(true);
+  };
+
+  const handleCloseMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   // Manual Door Toggle Button
   const handleToggleDoors = () => {
     setManualDoorsOpen(prev => {
@@ -136,12 +156,14 @@ export function ElevatorHero({ playElevatorChime }) {
           titleRef.current.style.opacity = '0';
           if (welcomeRef.current) welcomeRef.current.classList.add('visible');
           if (indicatorRef.current) indicatorRef.current.style.opacity = '0';
+          if (hotspotRef.current) hotspotRef.current.classList.add('visible');
         } else {
           leftDoorRef.current.style.transform = 'translate3d(0, 0, 0)';
           rightDoorRef.current.style.transform = 'translate3d(0, 0, 0)';
           titleRef.current.style.opacity = '1';
           if (welcomeRef.current) welcomeRef.current.classList.remove('visible');
           if (indicatorRef.current) indicatorRef.current.style.opacity = '1';
+          if (hotspotRef.current) hotspotRef.current.classList.remove('visible');
         }
 
         setTimeout(() => {
@@ -161,12 +183,52 @@ export function ElevatorHero({ playElevatorChime }) {
         
         {/* Background Layer: 4K Rooftop Terrace */}
         <div className="rooftop-bg-layer">
-          <img 
-            ref={rooftopRef}
-            src="/assets/rooftop_bar_terrace.jpg" 
-            alt="Joanna's Rooftop Bar Terrace" 
-            className="rooftop-photo"
-          />
+          <div className="rooftop-scene-viewport" ref={rooftopRef}>
+            <img 
+              src="/assets/rooftop_bar_terrace.jpg" 
+              alt="Joanna's Rooftop Bar Terrace" 
+              className="rooftop-photo"
+            />
+
+            {/* Bar Counter Interactive Menu Hotspot */}
+            <div 
+              className="bar-menu-hotspot"
+              ref={hotspotRef}
+              onClick={handleOpenMenu}
+              role="button"
+              tabIndex={0}
+              aria-label="Open Joanna's Bar Menu"
+              title="Click to explore the Cocktail & Dining Menu"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleOpenMenu();
+                }
+              }}
+            >
+              {/* Tabletop Folio Stand Object */}
+              <div className="bar-menu-stand-wrap">
+                <div className="hotspot-glow-ring" />
+                <div className="tabletop-menu-book">
+                  <div className="book-spine-gold" />
+                  <div className="book-crest-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="1.5">
+                      <path d="M4 5h16M12 5v9M8 14c0 2.5 1.8 4 4 4s4-1.5 4-4M12 18v3M9 21h6" strokeLinecap="round" />
+                    </svg>
+                  </div>
+                  <span className="book-brand">JOANNA'S</span>
+                  <span className="book-sub">MENU</span>
+                </div>
+              </div>
+
+              {/* Floating Aesthetic Cue Badge */}
+              <div className="hotspot-callout-badge">
+                <span className="cue-sparkle">✦</span>
+                <span className="cue-title">BAR MENU</span>
+                <span className="cue-action">Tap to Open</span>
+              </div>
+            </div>
+          </div>
           
           <div className="sunlight-overlay" />
 
@@ -176,7 +238,14 @@ export function ElevatorHero({ playElevatorChime }) {
             <h2 className="terrace-title">Where the Skyline Meets the Sunset</h2>
             <p className="terrace-tagline">Open-air mixology, sunlit breezes, and unforgettable panoramic horizons.</p>
             <div className="terrace-cta-group">
-              <a href="#reserve-section" className="btn-hero-primary">Explore Experience</a>
+              <button 
+                className="btn-hero-primary"
+                onClick={handleOpenMenu}
+                title="Open Cocktail & Dining Menu"
+              >
+                ✦ Explore Bar Menu
+              </button>
+              <a href="#reserve-section" className="btn-hero-glass">Reserve Experience</a>
             </div>
           </div>
         </div>
@@ -237,6 +306,14 @@ export function ElevatorHero({ playElevatorChime }) {
         </div>
 
       </div>
+
+      {/* Minimal Aesthetic Folio Menu Modal */}
+      <MenuModal 
+        isOpen={isMenuOpen} 
+        onClose={handleCloseMenu} 
+        playPageTurn={playPageTurn} 
+      />
     </section>
   );
 }
+
