@@ -7,7 +7,7 @@ import { ToastSection } from './components/ToastSection/ToastSection';
 import { Footer } from './components/Footer/Footer';
 
 export default function App() {
-  const { soundEnabled, toggleSound, playElevatorChime, playCocktailClink, playPageTurn } = useWebAudio();
+  const { soundEnabled, toggleSound, playElevatorChime, playCocktailClink } = useWebAudio();
 
   return (
     <div className="app-root">
@@ -22,8 +22,6 @@ export default function App() {
         {/* 1. Elevator Hero Scroll Section */}
         <ElevatorHero
           playElevatorChime={playElevatorChime}
-          playCocktailClink={playCocktailClink}
-          playPageTurn={playPageTurn}
         />
 
         {/* 2. Toast Animation Section */}
